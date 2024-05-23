@@ -12,7 +12,7 @@ password1 = "password1"
 server2 = "irc.libera.chat"
 channel2 = "#debian-offtopic"
 nickname2 = "debianoffportal"
-password2 = "password2"
+password2 = "123456"
 
 class IRCBot(irc.bot.SingleServerIRCBot):
     def __init__(self, server, channel, nickname, password, target_server, target_channel):
@@ -32,7 +32,7 @@ class IRCBot(irc.bot.SingleServerIRCBot):
 
     def identify(self, connection):
         connection.privmsg("NickServ", f"IDENTIFY {self.nickname} {self.password}")
-       
+    
         threading.Timer(5.0, self.join_channel, [connection]).start()
 
     def join_channel(self, connection):
@@ -43,12 +43,12 @@ class IRCBot(irc.bot.SingleServerIRCBot):
         nick = event.source.nick
         message = event.arguments[0]
 
-        # Only forward the message if it's from the source channel
+       
         if event.target == self.channel:
             self.pass_message(nick, message)
 
     def pass_message(self, nick, message):
-        pass  # Override this method in subclasses
+        pass  
 
 class MessagePasser(threading.Thread):
     def __init__(self, source_bot, target_bot):
