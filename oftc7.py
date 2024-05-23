@@ -2,13 +2,13 @@ import irc.bot
 import threading
 import time
 
-# Bot 1 configuration
+
 server1 = "irc.oftc.net"
 channel1 = "#debian-offtopic"
 nickname1 = "debianoffportal"
 password1 = "password1"
 
-# Bot 2 configuration
+
 server2 = "irc.libera.chat"
 channel2 = "#debian-offtopic"
 nickname2 = "debianoffportal"
@@ -26,13 +26,13 @@ class IRCBot(irc.bot.SingleServerIRCBot):
         self.connected = False
 
     def on_welcome(self, connection, event):
-        # Send NickServ identify message after a 5 second delay
+      
         if self.password:
             threading.Timer(5.0, self.identify, [connection]).start()
 
     def identify(self, connection):
         connection.privmsg("NickServ", f"IDENTIFY {self.nickname} {self.password}")
-        # Wait for 5 seconds before joining the channel to ensure identification is processed
+       
         threading.Timer(5.0, self.join_channel, [connection]).start()
 
     def join_channel(self, connection):
@@ -85,7 +85,7 @@ def main():
     message_passer1 = MessagePasser(bot1, bot2)
     message_passer2 = MessagePasser(bot2, bot1)
 
-    # Start bots and message passers
+
     bot1_thread = threading.Thread(target=bot1.start)
     bot2_thread = threading.Thread(target=bot2.start)
     message_passer1.start()
@@ -94,7 +94,7 @@ def main():
     bot1_thread.start()
     bot2_thread.start()
 
-    # Wait for each bot to finish
+ 
     bot1_thread.join()
     bot2_thread.join()
 
